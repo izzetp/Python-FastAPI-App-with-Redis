@@ -31,6 +31,8 @@ cd Python-FastAPI-App-with-Redis
 Build your FastAPI Docker image from the `src/` directory and push it to Docker Hub:
 
 ```bash
+minikube start
+
 cd src
 docker build -t <your-dockerhub-username>/fastapi-app:latest .
 docker push <your-dockerhub-username>/fastapi-app:latest
@@ -41,15 +43,15 @@ cd ..
 
 ---
 
-### 3. Deploy Redis on Kubernetes
+### 3. Apply all manifests
 
-Apply the Redis Deployment and Service YAMLs:
 
 ```bash
-minikube start
-
 kubectl apply -f redis-deployment.yaml
 kubectl apply -f redis-service.yaml
+kubectl apply -f fastapi-deployment.yaml
+kubectl apply -f fastapi-service.yaml
+
 ```
 
 ---
