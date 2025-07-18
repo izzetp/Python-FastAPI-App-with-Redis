@@ -47,9 +47,9 @@ cd ..
 
 
 ```bash
+
 kubectl apply -f redis-deployment.yaml
 kubectl apply -f redis-service.yaml
-kubectl apply -f fastapi-deployment.yaml
 kubectl apply -f fastapi-service.yaml
 
 ```
