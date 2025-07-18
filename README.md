@@ -46,6 +46,8 @@ cd ..
 Apply the Redis Deployment and Service YAMLs:
 
 ```bash
+minikube start
+
 kubectl apply -f redis-deployment.yaml
 kubectl apply -f redis-service.yaml
 ```
