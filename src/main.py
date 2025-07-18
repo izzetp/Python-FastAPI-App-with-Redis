@@ -1,29 +1,24 @@
 from fastapi import FastAPI
 import redis
-import requests
 import os
+from urllib.parse import urlparse
+import requests
 
 app = FastAPI()
 
-redis_host = os.getenv("REDIS_HOST", "redis")
-redis_port_str = os.getenv("REDIS_PORT", "6379")
-
-if ":" in redis_port_str:
-    redis_port_str = redis_port_str.split(":")[-1]
-
-redis_port = int(redis_port_str)
-
-r = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
+# Parse a single REDIS_URL (e.g. redis://redis:6379)
+redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+parsed = urlparse(redis_url)
+r = redis.Redis(host=parsed.hostname, port=parsed.port, decode_responses=True)
 
 @app.get("/")
-def read_root():
+def root():
     return {"message": "FastAPI with Redis is working!"}
 
 @app.get("/weather/{city}")
 def get_weather(city: str):
     if r.exists(city):
         return {"source": "cache", "data": r.get(city)}
-
     response = requests.get(f"https://wttr.in/{city}?format=3")
     r.setex(city, 60, response.text)
     return {"source": "api", "data": response.text}
