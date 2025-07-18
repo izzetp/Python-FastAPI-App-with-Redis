@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi-deployment
+  name: redis_deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fastapi
+      app: redis
   template:
     metadata:
       labels:
-        app: fastapi
+        app: redis
     spec:
       containers:
-      - name: fastapi
-        image: ${DOCKER_USERNAME}/fastapi-app:latest
+      - name: redis
+        image: redis:7
         ports:
-        - containerPort: 8000
-        env:
-        - name: REDIS_HOST
-          value: "redis"
+        - containerPort: 6379
