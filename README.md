@@ -43,14 +43,13 @@ cd ..
 
 ---
 
-### 3. Apply all manifests
+### 3. Apply Redis manifests
 
 
 ```bash
 
 kubectl apply -f redis-deployment.yaml
 kubectl apply -f redis-service.yaml
-kubectl apply -f fastapi-service.yaml
 
 ```
 
